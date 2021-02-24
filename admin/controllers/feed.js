@@ -82,8 +82,8 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.getPost = (req, res, next) => {
-  const postId = req.params.postId;
-  Post.findById(postId)
+  const slug = req.params.slug;
+  Post.findOne({slug})
     .then(post => {
       if (!post) {
         const error = new Error('Could not find post.');
