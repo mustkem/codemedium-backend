@@ -101,25 +101,29 @@ exports.getPost = (req, res, next) => {
 };
 
 exports.updatePost = (req, res, next) => {
-  const postId = req.params.postId;
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new Error('Validation failed, entered data is incorrect.');
-    error.statusCode = 422;
-    throw error;
-  }
-  const title = req.body.title;
-  const content = req.body.content;
-  let imageUrl = req.body.image;
-  if (req.file) {
-    imageUrl = req.file.path;
-  }
-  if (!imageUrl) {
-    const error = new Error('No file picked.');
-    error.statusCode = 422;
-    throw error;
-  }
-  Post.findById(postId)
+  const slug = req.params.slug;
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty()) {
+  //   const error = new Error('Validation failed, entered data is incorrect.');
+  //   error.statusCode = 422;
+  //   throw error;
+  // }
+
+  // const title = req.body.title;
+  // const content = req.body.content;
+  // const title = req.body.title;
+
+  // let imageUrl = req.body.image;
+  // if (req.file) {
+  //   imageUrl = req.file.path;
+  // }
+  // if (!imageUrl) {
+  //   const error = new Error('No file picked.');
+  //   error.statusCode = 422;
+  //   throw error;
+  // }
+
+  Post.findOne({slug})
     .then(post => {
       if (!post) {
         const error = new Error('Could not find post.');
@@ -131,12 +135,17 @@ exports.updatePost = (req, res, next) => {
         error.statusCode = 403;
         throw error;
       }
-      if (imageUrl !== post.imageUrl) {
-        clearImage(post.imageUrl);
-      }
-      post.title = title;
-      post.imageUrl = imageUrl;
-      post.content = content;
+      // if (imageUrl !== post.imageUrl) {
+      //   clearImage(post.imageUrl);
+      // }
+
+      Object.keys(req.body).forEach(key=>{
+        post[key] = req.body[key];
+      })
+
+      // post.title = title;
+      // post.imageUrl = imageUrl;
+      // post.content = content;
       return post.save();
     })
     .then(result => {

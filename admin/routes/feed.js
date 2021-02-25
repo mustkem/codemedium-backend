@@ -27,16 +27,8 @@ router.post(
 router.get('/post/:slug', isAuth, feedController.getPost);
 
 router.put(
-  '/post/:postId',
+  '/post/:slug',
   isAuth,
-  [
-    body('title')
-      .trim()
-      .isLength({ min: 5 }),
-    body('content')
-      .trim()
-      .isLength({ min: 5 })
-  ],
   feedController.updatePost
 );
 
