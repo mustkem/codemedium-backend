@@ -62,7 +62,7 @@ exports.login = (req, res, next) => {
           userId: loadedUser._id.toString(),
         },
         "somesupersecretsecret",
-        { expiresIn: "1m" }
+        { expiresIn: "10h" }
       );
       res
         .status(200)
