@@ -31,7 +31,7 @@ exports.getPosts = (req, res, next) => {
       if(category){
         posts.forEach(postItem=>{
           postItem.categories.forEach(item=>{
-            if(item.slug === category){
+            if(item.slug === category && postItem){
               filteredPosts.push(postItem);
             }
           }) 
