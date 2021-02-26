@@ -23,6 +23,11 @@ const postSchema = new Schema(
       type: String,
       required: true
     },
+    categories:[{
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+      required: true
+    }],
     creator: {
       type: Schema.Types.ObjectId,
       ref: 'AdminUser',

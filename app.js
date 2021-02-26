@@ -10,6 +10,8 @@ const authRoutes = require('./routes/auth');
 
 const adminAuthRoutes = require('./admin/routes/auth');
 const adminFeedRoutes = require('./admin/routes/feed')
+const adminFeedCommon = require('./admin/routes/common')
+
 
 
 const app = express();
@@ -58,6 +60,9 @@ app.use('/auth', authRoutes);
 
 app.use('/admin/feed', adminFeedRoutes);
 app.use('/admin/auth', adminAuthRoutes);
+app.use('/admin/common', adminFeedCommon);
+
+
 
 app.use((error, req, res, next) => {
   console.log(error);

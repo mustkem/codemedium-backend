@@ -10,7 +10,14 @@ exports.getPosts = (req, res, next) => {
   const userId = req.userId;
 
   User.findById(userId)
-    .populate("posts")
+    .populate({
+      path: "posts",
+      model: "Post",
+      populate: {
+        path: "categories",
+        model: "Category",
+      },
+    })
     .then((user) => {
       return user;
     })
@@ -40,7 +47,7 @@ exports.createPost = (req, res, next) => {
 
   const authorCode = req.body.authorCode;
   if (authorCode !== "262225") {
-    const error = new Error('Invalid request');
+    const error = new Error("Invalid request");
     error.statusCode = 422;
     throw error;
   }
@@ -60,6 +67,7 @@ exports.createPost = (req, res, next) => {
     imageUrl: imageUrl,
     slug: req.body.slug,
     desc: req.body.desc,
+    categories: req.body.categories,
     creator: req.userId,
   });
   post
@@ -111,7 +119,7 @@ exports.updatePost = (req, res, next) => {
 
   const authorCode = req.body.authorCode;
   if (authorCode !== "262225") {
-    const error = new Error('Invalid request');
+    const error = new Error("Invalid request");
     error.statusCode = 422;
     throw error;
   }
@@ -178,7 +186,7 @@ exports.deletePost = (req, res, next) => {
 
   const authorCode = req.body.authorCode;
   if (authorCode !== "262225") {
-    const error = new Error('Invalid request');
+    const error = new Error("Invalid request");
     error.statusCode = 422;
     throw error;
   }
