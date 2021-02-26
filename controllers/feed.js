@@ -10,19 +10,38 @@ exports.getPosts = (req, res, next) => {
   const currentPage = req.query.page || 1;
   const perPage = 2;
   let totalItems;
+
+  const category = req.query.category;
+
+  console.log("cate", req.query)
+
+
   Post.find()
-    .countDocuments()
-    .then(count => {
-      totalItems = count;
-      return Post.find()
-        .skip((currentPage - 1) * perPage)
-        .limit(perPage);
-    })
+  .populate("categories")
+    // .countDocuments()
+    // .then(count => {
+    //   totalItems = count;
+    //   return Post.find()
+    //     .skip((currentPage - 1) * perPage)
+    //     .limit(perPage);
+    // })
     .then(posts => {
+      let filteredPosts = [];
+      //filter//
+      if(category){
+        posts.forEach(postItem=>{
+          postItem.categories.forEach(item=>{
+            if(item.slug === category){
+              filteredPosts.push(postItem);
+            }
+          }) 
+        })
+      } else { 
+        filteredPosts = posts;
+      }
       res.status(200).json({
         message: 'Fetched posts successfully.',
-        posts: posts,
-        totalItems: totalItems
+        posts: filteredPosts,
       });
     })
     .catch(err => {

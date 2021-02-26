@@ -19,6 +19,10 @@ const postSchema = new Schema(
       type: String,
       required: true
     },
+    active:{
+      type: String,
+      default:false,      
+    },
     slug:{
       type: String,
       required: true

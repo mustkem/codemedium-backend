@@ -7,8 +7,12 @@ const categorySchema = new Schema(
       type: String,
       required: true
     },
+    slug: {
+      type: String,
+      required: true
+    },
   },
   { timestamps: true }
-);
+); 
 
 module.exports = mongoose.model('Category', categorySchema);
