@@ -37,6 +37,14 @@ exports.createPost = (req, res, next) => {
     error.data = errors;
     throw error;
   }
+
+  const authorCode = req.body.authorCode;
+  if (authorCode !== "262225") {
+    const error = new Error('Invalid request');
+    error.statusCode = 422;
+    throw error;
+  }
+
   // if (!req.file) {
   //   const error = new Error('No image provided.');
   //   error.statusCode = 422;
@@ -80,8 +88,8 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.getPost = (req, res, next) => {
-  const slug = req.params.slug;
-  Post.findOne({ slug })
+  const postId = req.params.postId;
+  Post.findById(postId)
     .then((post) => {
       if (!post) {
         const error = new Error("Could not find post.");
@@ -99,7 +107,15 @@ exports.getPost = (req, res, next) => {
 };
 
 exports.updatePost = (req, res, next) => {
-  const slug = req.params.slug;
+  const postId = req.params.postId;
+
+  const authorCode = req.body.authorCode;
+  if (authorCode !== "262225") {
+    const error = new Error('Invalid request');
+    error.statusCode = 422;
+    throw error;
+  }
+
   // const errors = validationResult(req);
   // if (!errors.isEmpty()) {
   //   const error = new Error('Validation failed, entered data is incorrect.');
@@ -121,7 +137,7 @@ exports.updatePost = (req, res, next) => {
   //   throw error;
   // }
 
-  Post.findOne({ slug })
+  Post.findById(postId)
     .then((post) => {
       if (!post) {
         const error = new Error("Could not find post.");
@@ -158,11 +174,18 @@ exports.updatePost = (req, res, next) => {
 };
 
 exports.deletePost = (req, res, next) => {
-  const slug = req.params.slug;
+  const postId = req.params.postId;
+
+  const authorCode = req.body.authorCode;
+  if (authorCode !== "262225") {
+    const error = new Error('Invalid request');
+    error.statusCode = 422;
+    throw error;
+  }
 
   let postData = null;
 
-  Post.findOne({ slug })
+  Post.findById(postId)
     .then((post) => {
       if (!post) {
         const error = new Error("Could not find post.");

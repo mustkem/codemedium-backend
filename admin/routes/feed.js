@@ -24,14 +24,14 @@ router.post(
   feedController.createPost
 );
 
-router.get('/post/:slug', isAuth, feedController.getPost);
+router.get('/post/:postId', isAuth, feedController.getPost);
 
 router.put(
-  '/post/:slug',
+  '/post/:postId',
   isAuth,
   feedController.updatePost
 );
 
-router.delete('/post/:slug', isAuth, feedController.deletePost);
+router.delete('/post/:postId', isAuth, feedController.deletePost);
 
 module.exports = router;
