@@ -64,7 +64,7 @@ app.use('/admin/feed', adminFeedRoutes);
 app.use('/admin/auth', adminAuthRoutes);
 app.use('/admin/common', adminFeedCommon);
 
-
+console.log("test")
 
 app.use((error, req, res, next) => {
   console.log(error);
