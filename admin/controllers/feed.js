@@ -98,6 +98,7 @@ exports.createPost = (req, res, next) => {
     });
 };
 
+
 exports.getPost = (req, res, next) => {
   const postId = req.params.postId;
   Post.findById(postId)
@@ -168,6 +169,10 @@ exports.updatePost = (req, res, next) => {
       Object.keys(req.body).forEach((key) => {
         post[key] = req.body[key];
       });
+
+      if(req.file){
+        post.bolbImageUrl = new Buffer(fs.readFileSync(req.file.path)).toString("base64");
+      }
 
       // post.title = title;
       // post.imageUrl = imageUrl;
