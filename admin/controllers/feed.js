@@ -67,6 +67,7 @@ exports.createPost = (req, res, next) => {
     title: title,
     content: content,
     imageUrl: imageUrl,
+    bolbImageUrl:new Buffer(fs.readFileSync(req.file.path)).toString('base64'),
     slug: req.body.slug,
     desc: req.body.desc,
     categories: req.body.categories,

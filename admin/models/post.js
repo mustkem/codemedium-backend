@@ -11,6 +11,10 @@ const postSchema = new Schema(
       type: String,
       required: false
     },
+    bolbImageUrl: {
+      type: String,
+      required: false
+    },
     content: {
       type: String,
       required: true
