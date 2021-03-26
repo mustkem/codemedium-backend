@@ -34,7 +34,7 @@ const postSchema = new Schema(
     categories:[{
       type: Schema.Types.ObjectId,
       ref: 'Category',
-      required: true
+      required: false
     }],
     creator: {
       type: Schema.Types.ObjectId,

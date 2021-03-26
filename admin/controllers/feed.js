@@ -70,7 +70,7 @@ exports.createPost = (req, res, next) => {
     bolbImageUrl: new Buffer(fs.readFileSync(req.file.path)).toString("base64"),
     slug: req.body.slug,
     desc: req.body.desc,
-    categories: req.body.categories,
+    categories: JSON.parse(req.body.categories),
     creator: req.userId,
   });
   post
@@ -167,8 +167,13 @@ exports.updatePost = (req, res, next) => {
       // }
 
       Object.keys(req.body).forEach((key) => {
-        post[key] = req.body[key];
+        if(key==="categories"){
+          post[key] = JSON.parse(req.body[key]);
+        } else{
+          post[key] = req.body[key];
+        }
       });
+      
 
       if(req.file){
         post.bolbImageUrl = new Buffer(fs.readFileSync(req.file.path)).toString("base64");

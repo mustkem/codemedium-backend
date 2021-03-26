@@ -67,8 +67,9 @@ app.use('/admin/common', adminFeedCommon);
 console.log("test")
 
 app.use((error, req, res, next) => {
-  console.log(error);
+  console.log("error-logger", error);     
   const status = error.statusCode || 500;
+  
   const message = error.message;
   const data = error.data;
   res.status(status).json({ message: message, data: data });
