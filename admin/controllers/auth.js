@@ -69,7 +69,7 @@ exports.login = (req, res, next) => {
         .json({
           token: token,
           userId: loadedUser._id.toString(),
-          user: { name: loadedUser.name, isValid: true },
+          user: { name: loadedUser.name, isValid: true, userId: loadedUser._id.toString() },
         });
     })
     .catch((err) => {
@@ -80,7 +80,7 @@ exports.login = (req, res, next) => {
     });
 };
 
-exports.getUserStatus = (req, res, next) => {
+exports.getUserStatus = (req, res, next) => { 
   User.findById(req.userId)
     .then((user) => {
       if (!user) {
@@ -88,7 +88,7 @@ exports.getUserStatus = (req, res, next) => {
         error.statusCode = 404;
         throw error;
       }
-      res.status(200).json({ user: { name: user.name, isValid: true } });
+      res.status(200).json({ user: { name: user.name, isValid: true, userId: user._id } });
     })
     .catch((err) => {
       if (!err.statusCode) {
