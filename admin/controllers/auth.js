@@ -12,6 +12,14 @@ exports.signup = (req, res, next) => {
     error.data = errors.array();
     throw error;
   }
+
+  const authorCode = req.body.authorCode;
+  if (authorCode !== "262225") {
+    const error = new Error("Invalid request");
+    error.statusCode = 422;
+    throw error;
+  }
+
   const email = req.body.email;
   const name = req.body.name;
   const password = req.body.password;
