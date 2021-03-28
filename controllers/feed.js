@@ -16,6 +16,7 @@ exports.getPosts = (req, res, next) => {
   console.log("cate", req.query);
 
   Post.find({active:true})
+    .sort({createdAt: -1})
     .populate("categories")
     // .countDocuments()
     // .then(count => {
